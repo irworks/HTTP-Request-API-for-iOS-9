@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomViewController.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : CustomViewController {
+    UITextField *requestURLField;
+    UITextField *requestMethodField;
+    UIButton *submitButton;
+    UITextView *resultTextView;
+}
 
 
 @end

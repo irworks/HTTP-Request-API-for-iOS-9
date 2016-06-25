@@ -12,10 +12,14 @@
 @synthesize delegate;
 
 - (id)initWithURL:(NSString *)urlString withMethod:(NSString *)method withParameters:(NSDictionary *)parameters {
-    return [self initWithURL:urlString withCachePolicy:NSURLRequestReloadIgnoringLocalCacheData withTimeout:60.0 withMethod:method withParameters:parameters];
+    return [self initWithURL:urlString withCachePolicy:NSURLRequestReloadIgnoringLocalCacheData withTimeout:60.0 withMethod:method withParameters:parameters withHeaders:nil];
 }
 
-- (id)initWithURL:(NSString *)urlString withCachePolicy:(NSURLRequestCachePolicy)cachePolicy withTimeout:(NSTimeInterval)timeout withMethod:(NSString *)method withParameters:(NSDictionary *)parameters {
+- (id)initWithURL:(NSString *)urlString withMethod:(NSString *)method withParameters:(NSDictionary *)parameters withHeaders:(NSDictionary *)headers {
+    return [self initWithURL:urlString withCachePolicy:NSURLRequestReloadIgnoringLocalCacheData withTimeout:60.0 withMethod:method withParameters:parameters withHeaders:headers];
+}
+
+- (id)initWithURL:(NSString *)urlString withCachePolicy:(NSURLRequestCachePolicy)cachePolicy withTimeout:(NSTimeInterval)timeout withMethod:(NSString *)method withParameters:(NSDictionary *)parameters withHeaders:(NSDictionary *)headers {
     self = [super init];
     
     //init the request
@@ -26,9 +30,21 @@
         parameters = [[NSDictionary alloc] init];
     }
     
+    //default header value
+    [request setValue:@"application/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    //check if headers
+    if(headers == nil) {
+        headers = [[NSDictionary alloc] init];
+    }
+    
+    //set header
+    for(NSString *headerKey in headers) {
+        [request setValue:[headers valueForKey:headerKey] forHTTPHeaderField:headerKey];
+    }
+    
     //set method, header and parameter 
     [request setHTTPMethod:method];
-    [request setValue:@"application/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:[[self buildParameterStringFromDictionary:parameters] dataUsingEncoding:NSUTF8StringEncoding]];
     
     [delegate onRequestPrepared];

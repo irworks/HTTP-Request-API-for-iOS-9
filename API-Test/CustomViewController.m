@@ -46,6 +46,7 @@
     [textField setBorderStyle:UITextBorderStyleRoundedRect];
     [textField setPlaceholder:placeholder];
     [textField setFont:[UIFont systemFontOfSize:16]];
+    [textField setAutocorrectionType:UITextAutocorrectionTypeNo];
     [mainScrollView addSubview:textField];
     
     yPos += textField.frame.size.height + ITEM_MARGIN;

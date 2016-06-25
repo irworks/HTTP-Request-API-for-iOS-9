@@ -52,20 +52,17 @@
     APITestRequest *apiTestRequest = [[APITestRequest alloc] initWithCallback:^(NSString *responseString, NSDictionary *responseDict, NSError *error) {
         NSLog(@"response %@", responseString);
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if(error != nil) {
-                [resultTextView setText:[error localizedDescription]];
-                return;
-            }
-            
-            if(responseDict != nil) {
-                [resultTextView setText:[NSString stringWithFormat:@"%@", responseDict]];
-                return;
-            }
-            
-            [resultTextView setText:responseString];
-        });
+        if(error != nil) {
+            [resultTextView setText:[error localizedDescription]];
+            return;
+        }
         
+        if(responseDict != nil) {
+            [resultTextView setText:[NSString stringWithFormat:@"%@", responseDict]];
+            return;
+        }
+        
+        [resultTextView setText:responseString];
         
     } withURL:[requestURLField text] withMethod:[requestMethodField text]];
     

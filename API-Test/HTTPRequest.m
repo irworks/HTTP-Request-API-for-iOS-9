@@ -12,11 +12,11 @@
 @synthesize delegate;
 
 - (id)initWithURL:(NSString *)urlString withMethod:(NSString *)method withParameters:(NSDictionary *)parameters {
-    return [self initWithURL:urlString withCachePolicy:NSURLRequestReloadIgnoringLocalCacheData withTimeout:60.0 withMethod:method withParameters:parameters withHeaders:nil];
+    return [self initWithURL:urlString withCachePolicy:NSURLRequestReloadIgnoringLocalCacheData withTimeout:REQUEST_DEFAULT_TIMEOUT withMethod:method withParameters:parameters withHeaders:nil];
 }
 
 - (id)initWithURL:(NSString *)urlString withMethod:(NSString *)method withParameters:(NSDictionary *)parameters withHeaders:(NSDictionary *)headers {
-    return [self initWithURL:urlString withCachePolicy:NSURLRequestReloadIgnoringLocalCacheData withTimeout:60.0 withMethod:method withParameters:parameters withHeaders:headers];
+    return [self initWithURL:urlString withCachePolicy:NSURLRequestReloadIgnoringLocalCacheData withTimeout:REQUEST_DEFAULT_TIMEOUT withMethod:method withParameters:parameters withHeaders:headers];
 }
 
 - (id)initWithURL:(NSString *)urlString withCachePolicy:(NSURLRequestCachePolicy)cachePolicy withTimeout:(NSTimeInterval)timeout withMethod:(NSString *)method withParameters:(NSDictionary *)parameters withHeaders:(NSDictionary *)headers {

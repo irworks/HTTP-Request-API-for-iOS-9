@@ -20,7 +20,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.title = @"API-Test";
+    self.title = @"POSTAPI";
     [self buildCustomUI];
     [self loadLastValues];
 }
@@ -33,6 +33,8 @@
     [submitButton      addTarget:self action:@selector(submitButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     resultTextView     = [self addTextviewToMainView:resultTextView withText:@"n/a"];
+    
+    [self addLogoToSubview];
 }
 
 - (void)loadLastValues {

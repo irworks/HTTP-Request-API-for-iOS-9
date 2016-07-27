@@ -21,6 +21,9 @@
 }
 
 - (void)setupMainUI {
+    [[[self navigationController] navigationBar] setBarTintColor:BLACK_COLOR];
+    [[[self navigationController] navigationBar] setTintColor:[UIColor whiteColor]];
+    [[[self navigationController] navigationBar] setBarStyle:UIBarStyleBlackTranslucent];
     
     yPos = 10;
     
@@ -47,6 +50,7 @@
     [textField setPlaceholder:placeholder];
     [textField setFont:[UIFont systemFontOfSize:16]];
     [textField setAutocorrectionType:UITextAutocorrectionTypeNo];
+    [textField setTextColor:BACKGROUND_COLOR];
     [mainScrollView addSubview:textField];
     
     yPos += textField.frame.size.height + ITEM_MARGIN;
@@ -87,6 +91,15 @@
     
     yPos += textView.frame.size.height + ITEM_MARGIN;
     return textView;
+}
+
+- (void)addLogoToSubview {
+    UIImageView *logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bigLogo"]];
+    [logoView setFrame:CGRectMake(self.view.frame.size.width/2-logoView.frame.size.width/2, yPos, logoView.frame.size.width, logoView.frame.size.height)];
+    
+    yPos += logoView.frame.size.height + ITEM_MARGIN;
+    
+    [mainScrollView addSubview:logoView];
 }
 
 - (IBAction)textFieldFinished:(id)sender {

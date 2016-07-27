@@ -18,7 +18,6 @@
     
     #define REQUEST_DEFAULT_TIMEOUT 60.0
     
-    #define REQUEST_FIRST_SPERATOR @"?"
     #define REQUEST_NORMAL_SPERATOR @"&"
     #define REQUEST_VALUE_SPERATOR @"="
 }

@@ -31,7 +31,7 @@
     }
     
     //default header value
-    [request setValue:@"application/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     //check if headers
     if(headers == nil) {
@@ -113,13 +113,7 @@
     NSString *parameterString = @"";
     
     for(NSString *key in dict) {
-        NSString *seperator = REQUEST_NORMAL_SPERATOR;
-        
-        if([parameterString length] <= 0) {
-            seperator = REQUEST_FIRST_SPERATOR;
-        }
-        
-        parameterString = [NSString stringWithFormat:@"%@%@%@%@%@", parameterString, seperator, key, REQUEST_VALUE_SPERATOR, [dict valueForKey:key]];
+        parameterString = [NSString stringWithFormat:@"%@%@%@%@%@", parameterString, REQUEST_NORMAL_SPERATOR, key, REQUEST_VALUE_SPERATOR, [dict valueForKey:key]];
     }
     
     return parameterString;

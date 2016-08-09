@@ -47,6 +47,9 @@
     [request setHTTPMethod:method];
     [request setHTTPBody:[[self buildParameterStringFromDictionary:parameters] dataUsingEncoding:NSUTF8StringEncoding]];
     
+    //prepare NSMutableData
+    requestData = [[NSMutableData alloc] init];
+    
     [delegate onRequestPrepared];
     
     return self;
@@ -90,22 +93,28 @@
         }
         
         [delegate onRequestFail:error];
+    }else{
+        NSError *error;
+        
+        NSString *responseString   = [[NSString alloc] initWithData:requestData encoding:NSUTF8StringEncoding];
+        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:requestData options:NSJSONReadingAllowFragments error:&error];
+        
+        if(error) {
+            [delegate onRequestFail:error];
+        }else{
+            [delegate onRequestSuccess:responseString withJSON:responseDict];
+        }
     }
     
     if(_debug) {
-        NSLog(@"%@", [task response]);
+        NSLog(@"HEADER: %@", [task response]);
+        NSLog(@"BODY: %@", [[NSString alloc] initWithData:requestData encoding:NSUTF8StringEncoding]);
     }
     
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    
-    NSError *error;
-    
-    NSString *responseString   = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-    
-    [delegate onRequestSuccess:responseString withJSON:responseDict];
+    [requestData appendData:data];
 }
 
 /* Util method to build request string */
